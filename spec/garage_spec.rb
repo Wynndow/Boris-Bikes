@@ -34,7 +34,7 @@ describe Garage do
       garage.release_working_bikes
       expect(garage.bikes).to be_empty
     end
-    
+
   end
 
 end
