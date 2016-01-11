@@ -23,6 +23,7 @@ class DockingStation
   end
 
   def dock_broken_bike(bike)
+    raise("Docking station is full") if dock_is_full?
     bike.report_broken
     @broken_bikes << bike
   end
@@ -42,7 +43,7 @@ class DockingStation
   private
 
   def dock_is_full?
-    bikes.length == DEFAULT_CAPACITY
+    bikes.length + broken_bikes.length >= DEFAULT_CAPACITY
   end
 
 end
