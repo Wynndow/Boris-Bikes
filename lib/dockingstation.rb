@@ -18,7 +18,7 @@ class DockingStation
   end
 
   def dock(bike)
-    raise("Docking station is full") if @bikes.length == DEFAULT_CAPACITY
+    raise("Docking station is full") if dock_is_full?
     @bikes << bike
   end
 
@@ -28,7 +28,7 @@ class DockingStation
   end
 
   def collect_broken_bikes
-    give_bikes = @broken_bikes.map{|bike| bike}
+    give_bikes = broken_bikes.map{|bike| bike}
     @broken_bikes.clear
     return give_bikes
   end
@@ -37,6 +37,12 @@ class DockingStation
     bikes.each do |bike|
       @bikes << bike
     end
+  end
+
+  private
+
+  def dock_is_full?
+    bikes.length == DEFAULT_CAPACITY
   end
 
 end
