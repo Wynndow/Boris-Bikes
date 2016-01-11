@@ -12,6 +12,12 @@ describe DockingStation do
         dock_stat.dock(bike)
         expect(dock_stat.bikes).to include(bike)
       end
+      context 'when dock is full' do
+        it 'raises an error' do
+          20.times {dock_stat.dock(bike)}
+            expect{dock_stat.dock(bike)}.to raise_error("Docking station is full")
+        end
+      end
 
   end
 
@@ -31,6 +37,11 @@ describe DockingStation do
   describe 'max capacity' do
     it 'default of 20' do
       expect(dock_stat.capacity).to eq(20)
+    end
+    
+    it 'has a variable max capacity' do
+      docking_station = DockingStation.new(30)
+      expect(docking_station.capacity).to eq(30)
     end
   end
 
