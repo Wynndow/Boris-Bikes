@@ -22,4 +22,9 @@ class DockingStation
     @bikes << bike
   end
 
+  def dock_broken_bike(bike)
+    bike.report_broken
+    @bikes << bike
+  end
+
 end

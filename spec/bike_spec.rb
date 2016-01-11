@@ -8,4 +8,11 @@ describe Bike do
     expect(bike.working).to eq(true)
   end
 
+  describe '#report_broken' do
+    it 'changes working status of bike to false' do
+        bike.report_broken
+        expect(bike.working).to be(false)
+    end
+  end
+
 end
