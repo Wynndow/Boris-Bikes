@@ -76,4 +76,11 @@ describe DockingStation do
     end
   end
 
+  describe '#receive_working_bikes' do
+    it 'stores delivered working bikes' do
+      dock_stat.receive_working_bikes([bike])
+      expect(dock_stat.bikes).to include(bike)
+    end
+  end
+
 end

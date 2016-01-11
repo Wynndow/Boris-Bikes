@@ -15,4 +15,12 @@ describe Bike do
     end
   end
 
+  describe '#fix' do
+    it 'changes working status of bike from false to true' do
+      bike.report_broken
+      bike.fix
+      expect(bike.working).to be(true)
+    end
+  end
+
 end

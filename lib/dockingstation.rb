@@ -33,4 +33,10 @@ class DockingStation
     return give_bikes
   end
 
+  def receive_working_bikes(bikes)
+    bikes.each do |bike|
+      @bikes << bike
+    end
+  end
+
 end
