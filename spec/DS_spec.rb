@@ -28,5 +28,11 @@ describe DockingStation do
 
   end
 
+  describe 'max capacity' do
+    it 'default of 20' do
+      expect(dock_stat.capacity).to eq(20)
+    end
+  end
+
 
 end
