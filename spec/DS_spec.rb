@@ -5,7 +5,9 @@ describe DockingStation do
   subject(:dock_stat) {described_class.new}
   let(:bike) {double(:bike)}
 
-
+  before(:each) do
+    allow(bike).to receive(:report_broken)
+  end
 
   describe '#dock' do
 
@@ -25,7 +27,6 @@ describe DockingStation do
 
   describe '#dock_broken_bike' do
     it 'calls report on bike' do
-      allow(bike).to receive(:report_broken)
       dock_stat.dock_broken_bike(bike)
       expect(bike).to have_received(:report_broken)
     end
@@ -35,13 +36,21 @@ describe DockingStation do
 
     it 'Releases a bike' do
       dock_stat.dock(bike)
+      allow(bike).to receive(:working).and_return(true)
       expect(dock_stat.release_bike).to eq(bike)
     end
 
     it 'raises an error if there are no bikes' do
-      expect{dock_stat.release_bike}.to raise_error("Can't release bike: None available")
+      expect{dock_stat.release_bike}.to raise_error("Can't release bike: None available or broken")
     end
 
+    context 'if bike is broken' do
+      it 'raises an error' do
+        dock_stat.dock_broken_bike(bike)
+        allow(bike).to receive(:working).and_return(false)
+        expect{dock_stat.release_bike}.to raise_error("Can't release bike: None available or broken")
+      end
+    end
   end
 
   describe 'max capacity' do
@@ -55,5 +64,16 @@ describe DockingStation do
     end
   end
 
+  describe 'give broken bikes' do
+    it 'returns list of broken bikes' do
+      dock_stat.dock_broken_bike(bike)
+      expect(dock_stat.collect_broken_bikes).to include(bike)
+    end
+    it 'empties docking station' do
+      dock_stat.dock_broken_bike(bike)
+      dock_stat.collect_broken_bikes
+      expect(dock_stat.broken_bikes).to be_empty
+    end
+  end
 
 end
